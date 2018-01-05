@@ -3,8 +3,8 @@ var config = require("./config");
 
 var app = {};
 var clientToken;
-app.TOPIC_IMAGES = "MagicMirror:new-images";
-app.TOPIC_TEXT = "MagicMirror:new-text";
+app.TOPIC_IMAGES = "MagicMirror/new_images";
+app.TOPIC_TEXT = "MagicMirror/new_text";
 app.LAST_TIMESTAMP = 0;
 
 // Callbacks that will be invoked when a message is received

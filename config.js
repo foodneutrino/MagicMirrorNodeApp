@@ -3,14 +3,14 @@ var config = {};
 // AWS IoT
 config.aws = {};
 config.aws.magicmirror = {
-    "keyPath": __dirname+'/keys/MagicMirrorThing-private.pem.key',
-    "certPath": __dirname+'/keys/MagicMirrorThing-certificate.pem.crt',
+    "keyPath": __dirname+'/keys/MagicMirror.private.key',
+    "certPath": __dirname+'/keys/MagicMirror.cert.pem',
     "caPath": __dirname+'/keys/root-CA.crt',
-    "host": "A2S4HK394S6UXN.iot.us-east-1.amazonaws.com",
+    "host": "a92x04d9sswpf.iot.us-east-1.amazonaws.com",
     "port": 8883,
-    "clientId": "MagicMirror-"+(new Date().getTime()),
-    "region":"us-east-1",
-    debug:true
+    "clientId": "MagicMirror",
+    "region": "us-east-1",
+    "debug": true
 };
 
 // YQL
@@ -20,8 +20,8 @@ config.yql.secret = '';
 
 // Weather
 config.weather = [
-    "Puyallup, WA",
-    "Seattle, WA",
+    "New York, NY",
+    "Portland, OR",
     "Detroit, MI"
 ];
 
