@@ -27,22 +27,21 @@
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script>
   var socket = io("localhost:4000");
-  
+
   socket.on('showme', function(data){
-    console.log('message: ' + JSON.stringify(data));
     var state = data.state;
     var html="";
     if(state.images) {
       resizer = "http://i.embed.ly/1/image/resize?key=cb0afdc785b947b0b862d215349fe973&height=300&grow=true&url=";
       htmlImages = '<div class="row">';
-      
+
       for(i=0; i<state.images.length; i++) {
-        encodedUrl = encodeURIComponent(state.images[i].unescapedUrl);
+        encodedUrl = encodeURIComponent(state.images[i].url);
         htmlImages +=  '<div class="image-holder">\
                             <img src="'+resizer+encodedUrl+'">\
                         </div>';
       }
-      
+
       htmlImages +=   '</div>';
     } else {
       htmlImages = "";

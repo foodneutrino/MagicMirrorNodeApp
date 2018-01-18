@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="row mirror-widget">
+    <div class="col-md-10 content-area"></div>
+    <div class="col-md-2">
+      <% for(var index in rows) { var timeString = rows[index].right; %>
+        <div class="time">
+          <span class="weather-icon" />
+          <h1> <%= timeString%> </h1>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script>
+  var socket = io("localhost:4500");
+
+  socket.on('times_up', function(data){
+    var state = data.time;
+
+    var html =   '<div class="row mirror-widget"> ' +
+        '<div class="col-md-10 content-area"></div> ' +
+    '<div class="col-md-2"> ' +
+        '<div class="time"> '+
+          '<span class="weather-icon" /> ' +
+          '<h1> ' + state + '</h1> ' +
+        '</div> ' +
+      '</div></div></div>'
+
+    $(".content-area").html(html);
+  });
+</script>
+<html>

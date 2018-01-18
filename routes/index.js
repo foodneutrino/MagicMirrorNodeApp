@@ -6,7 +6,6 @@ var config = require("../config");
 var magicMirror = require('../magicMirror');
 var moment = require("moment");
 
-
 // Prep YQL Query for Weather
 var yqlCities = "text=\""+config.weather.join("\" OR text=\"")+"\"";
 var yqlString = 'select * from weather.forecast where woeid in (select woeid from geo.places where '+yqlCities+')';
@@ -41,8 +40,23 @@ router.get('/', function(req, res, next) {
 
 
     // Render our index.html
-    res.render('index',{ 
-        title:"Carreon Home",
+    res.render('index',{
+        title:"Mirror Mirror Home",
+        rows: rowContent
+    });
+    next();
+}, function(){
+    // clean up
+    rowContent = [];
+});
+
+router.get('/test', function(req, res, next) {
+    var timeTag = moment().format('MMMM Do YYYY, h:mm a')
+    rowContent.push = {right:timeTag};
+
+    // Render our index.html
+    res.render('test',{
+        title:"Test Page",
         rows: rowContent
     });
     next();
