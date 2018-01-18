@@ -15,7 +15,7 @@
       <% for(var index in rows) { var timeString = rows[index].right; %>
         <div class="time">
           <span class="weather-icon" />
-          <h1> <%= timeString%> </h1>
+          <h1 id="currentTime"> <%= timeString%> </h1>
         </div>
       <% } %>
     </div>
@@ -28,6 +28,9 @@
   socket.on('times_up', function(data){
     var state = data.time;
 
+    var domTime = document.getElementById('currentTime')
+    domTime.innerHTML = state
+/*
     var html =   '<div class="row mirror-widget"> ' +
         '<div class="col-md-10 content-area"></div> ' +
     '<div class="col-md-2"> ' +
@@ -38,6 +41,7 @@
       '</div></div></div>'
 
     $(".content-area").html(html);
+*/
   });
 </script>
 <html>
