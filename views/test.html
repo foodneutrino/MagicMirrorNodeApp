@@ -12,10 +12,13 @@
   <div class="row mirror-widget">
     <div class="col-md-10 content-area"></div>
     <div class="col-md-2">
-      <% for(var index in rows) { var timeString = rows[index].right; %>
-        <div class="time">
-          <span class="weather-icon" />
-          <h1 id="currentTime"> <%= timeString%> </h1>
+      <% for(var index in rows) { var channel = rows[index].left; %>
+        <div class="weather-degrees">
+          <span class="weather-icon" data-icon="<%= channel.item.condition.character%>" />
+          <span id='location_temp'><%= channel.item.condition.temp%></span>
+        </div>
+        <div class="weather-location">
+          <span><%= channel.location.city%>, <%= channel.location.region%></span>
         </div>
       <% } %>
     </div>
@@ -26,22 +29,9 @@
   var socket = io("localhost:4500");
 
   socket.on('times_up', function(data){
-    var state = data.time;
+    var weatherUpdates = data.weatherRows;
 
-    var domTime = document.getElementById('currentTime')
-    domTime.innerHTML = state
-/*
-    var html =   '<div class="row mirror-widget"> ' +
-        '<div class="col-md-10 content-area"></div> ' +
-    '<div class="col-md-2"> ' +
-        '<div class="time"> '+
-          '<span class="weather-icon" /> ' +
-          '<h1> ' + state + '</h1> ' +
-        '</div> ' +
-      '</div></div></div>'
-
-    $(".content-area").html(html);
-*/
+    var domTime = document.getElementsByClass('col-md-2')
   });
 </script>
 <html>

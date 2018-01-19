@@ -15,7 +15,7 @@
       <% for(var index in rows) { var channel = rows[index].left; %>
         <div class="weather-degrees">
           <span class="weather-icon" data-icon="<%= channel.item.condition.character%>" />
-          <%= channel.item.condition.temp%>
+          <span id='location_temp'><%= channel.item.condition.temp%></span>
         </div>
         <div class="weather-location">
           <span><%= channel.location.city%>, <%= channel.location.region%></span>

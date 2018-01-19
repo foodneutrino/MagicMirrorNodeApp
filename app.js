@@ -5,7 +5,6 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var magicMirror = require('./magicMirror');
-var Timer = require('./test_timer')
 var io = require('socket.io')(4000);
 
 var routes = require(__dirname+'/routes/index');
@@ -13,9 +12,6 @@ var app = express();
 
 // Setup AWS IoT
 magicMirror.setup();
-
-// Setup time update
-var timer = new Timer()
 
 // Listener for IoT event
 // Let's broadcast via Socket.io
