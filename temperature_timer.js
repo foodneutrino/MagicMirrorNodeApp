@@ -9,15 +9,28 @@ class TempInfoTimer {
     this.yqlCities = "text=\""+this.places.join("\" OR text=\"")+"\"";
     this.yqlString = 'select * from weather.forecast where woeid in (select woeid from geo.places where '+this.yqlCities+')';
 
-    setTimeout(this.updateTemps.bind(this), 60000)
+    setTimeout(this.updateTemps.bind(this), 10000)
   }
 
   updateTemps() {
     console.log("Called timer")
+    var boundProcessWeather = this.processWeather.bind(this)
     this.getWeather().then(function(response) {
-      io.emit('times_up',{temps: this.processWeather(response)});
-      setTimeout(this.updateTemps.bind(this), 60000)
+      console.log("Weather response count: [" + response.query.count + "]")
+      var weatherRow = []
+      var parsedWeather = boundProcessWeather(response)
+      for (var index in parsedWeather ) {
+        var cityWeather = parsedWeather[index]
+        console.log("Updated Weather data of index [" +
+          index + "] : [" +
+          cityWeather + "]")
+        weatherRow.push({left: cityWeather})
+      }
+
+      io.emit('times_up', weatherRow);
+      console.log("message sent")
     })
+    setTimeout(this.updateTemps.bind(this), 60000)
   }
 
   getWeather() {

@@ -31,7 +31,29 @@
   socket.on('times_up', function(data){
     var weatherUpdates = data.weatherRows;
 
-    var domTime = document.getElementsByClass('col-md-2')
+    console.log("Socket msg: [" + data + "]")
+    var domWeather = document.getElementsByClassName('weather-degrees')
+    Array.prototype.forEach.call(domWeather, function(currentValue) {
+      console.log(currentValue + ' ' + currentValue.tagName + ' ' + currentValue.innerHtml);
+      Array.prototype.forEach.call(currentValue.getElementsByClassName('weather-icon'), function(currentInnerValue){
+        console.log(currentInnerValue)
+        Array.prototype.forEach.call(currentInnerValue, function(tempTag){
+          console.log(tempTag)
+        })
+      })
+    })
+    /*
+    for (var element in domWeather) {
+      console.log("ELEMENT: [" + element + "]")
+      for (var weatherChild in domWeather[element]) {
+        var className = weatherChild.className
+        console.log("Weather Element: [" + className + "]")
+        if (className == 'weather-icon') {
+          // update value
+          console.log("UPDATE")
+        }
+      }
+    }*/
   });
 </script>
 <html>
