@@ -9,7 +9,7 @@ class TempInfoTimer {
     this.yqlCities = "text=\""+this.places.join("\" OR text=\"")+"\"";
     this.yqlString = 'select * from weather.forecast where woeid in (select woeid from geo.places where '+this.yqlCities+')';
 
-    setTimeout(this.updateTemps.bind(this), 10000)
+    setTimeout(this.updateTemps.bind(this), 60000)
   }
 
   updateTemps() {
@@ -30,7 +30,7 @@ class TempInfoTimer {
       io.emit('times_up', weatherRow);
       console.log("message sent")
     })
-    setTimeout(this.updateTemps.bind(this), 60000)
+    setTimeout(this.updateTemps.bind(this), 300000)
   }
 
   getWeather() {

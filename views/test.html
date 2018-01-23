@@ -11,11 +11,11 @@
 <body>
   <div class="row mirror-widget">
     <div class="col-md-10 content-area"></div>
-    <div class="col-md-2">
+    <div class="col-md-2" id="temp_block">
       <% for(var index in rows) { var channel = rows[index].left; %>
         <div class="weather-degrees">
           <span class="weather-icon" data-icon="<%= channel.item.condition.character%>" />
-          <span id='location_temp'><%= channel.item.condition.temp%></span>
+          <span><%= channel.item.condition.temp%></span>
         </div>
         <div class="weather-location">
           <span><%= channel.location.city%>, <%= channel.location.region%></span>
@@ -29,31 +29,22 @@
   var socket = io("localhost:4500");
 
   socket.on('times_up', function(data){
-    var weatherUpdates = data.weatherRows;
-
-    console.log("Socket msg: [" + data + "]")
-    var domWeather = document.getElementsByClassName('weather-degrees')
-    Array.prototype.forEach.call(domWeather, function(currentValue) {
-      console.log(currentValue + ' ' + currentValue.tagName + ' ' + currentValue.innerHtml);
-      Array.prototype.forEach.call(currentValue.getElementsByClassName('weather-icon'), function(currentInnerValue){
-        console.log(currentInnerValue)
-        Array.prototype.forEach.call(currentInnerValue, function(tempTag){
-          console.log(tempTag)
-        })
-      })
+    var tempBlock = document.getElementById('temp_block')
+    var htmlAppend = ""
+    data.forEach(weatherData => {
+      console.log("Extracting From [" + weatherData + "]")
+      var channel = weatherData.left
+      htmlAppend +=
+       '<div class="weather-degrees">' +
+         '<span class="weather-icon" data-icon="'+ channel.item.condition.character + '" />' +
+         '<span>' + channel.item.condition.temp + '</span>' +
+       '</div>' +
+       '<div class="weather-location">' +
+         '<span>' + channel.location.city + ', ' + channel.location.region + '</span>' +
+       '</div>'
     })
-    /*
-    for (var element in domWeather) {
-      console.log("ELEMENT: [" + element + "]")
-      for (var weatherChild in domWeather[element]) {
-        var className = weatherChild.className
-        console.log("Weather Element: [" + className + "]")
-        if (className == 'weather-icon') {
-          // update value
-          console.log("UPDATE")
-        }
-      }
-    }*/
+    console.log("Updating Weather: [" + htmlAppend + "]")
+    tempBlock.innerHTML = htmlAppend
   });
 </script>
 <html>
