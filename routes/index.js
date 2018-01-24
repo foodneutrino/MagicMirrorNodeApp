@@ -19,18 +19,20 @@ var rowContent = [];
  * Actual Magic Mirror homepage
  */
 router.get('/', function(req, res, next) {
-    query.exec(function(err, data) {
-        for(var i=0; data && i<data.query.count; i++) {
-            var channel   = data.query.results.channel[i];
-            var code = channel.item.condition.code;
-            channel.item.condition.character = (config.weatherCondition[code] || ")").toUpperCase();
-
-            // HTML
-            rowContent.push({left:channel});
-        }
-        next();
-    });
-
+  var temps = new Temps()
+  console.log("Created temperature class")
+  temps.getWeather().then(function (response) {
+    var waitForWeather = temps.processWeather(response)
+    console.log("Parsed Weather: [" + waitForWeather + "]")
+    for (var index in waitForWeather ) {
+      var cityWeather = waitForWeather[index]
+      console.log("Received Weather data of index [" +
+        index + "] : [" +
+        cityWeather + "]")
+      rowContent.push({left: cityWeather})
+    }
+    next();
+  });
 }, function(req, res, next) {
 
     if(rowContent.length) {
