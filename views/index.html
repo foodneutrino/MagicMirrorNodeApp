@@ -11,7 +11,7 @@
 <body>
   <div class="row mirror-widget">
     <div class="col-md-10 content-area"></div>
-    <div class="col-md-2">
+    <div class="col-md-2" id="temp_block">
       <% for(var index in rows) { var channel = rows[index].left; %>
         <div class="weather-degrees">
           <span class="weather-icon" data-icon="<%= channel.item.condition.character%>" />
@@ -52,6 +52,25 @@
     }
 
     $(".content-area").html(html+htmlImages);
+  });
+
+  socket.on('times_up', function(data){
+    var tempBlock = document.getElementById('temp_block')
+    var htmlAppend = ""
+    data.forEach(weatherData => {
+      console.log("Extracting From [" + weatherData + "]")
+      var channel = weatherData.left
+      htmlAppend +=
+       '<div class="weather-degrees">' +
+         '<span class="weather-icon" data-icon="'+ channel.item.condition.character + '" />' +
+         '<span>' + channel.item.condition.temp + '</span>' +
+       '</div>' +
+       '<div class="weather-location">' +
+         '<span>' + channel.location.city + ', ' + channel.location.region + '</span>' +
+       '</div>'
+    })
+    console.log("Updating Weather: [" + htmlAppend + "]")
+    tempBlock.innerHTML = htmlAppend
   });
 </script>
 <html>
