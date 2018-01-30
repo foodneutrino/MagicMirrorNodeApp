@@ -27,6 +27,7 @@
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script>
   var socket = io("localhost:4000");
+  var weatherSocket = io("localhost:4500")
 
   socket.on('showme', function(data){
     var state = data.state;
@@ -54,7 +55,7 @@
     $(".content-area").html(html+htmlImages);
   });
 
-  socket.on('times_up', function(data){
+  weatherSocket.on('times_up', function(data){
     var tempBlock = document.getElementById('temp_block')
     var htmlAppend = ""
     data.forEach(weatherData => {
